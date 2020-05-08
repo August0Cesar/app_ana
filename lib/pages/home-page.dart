@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:myapp/commons.widget/custom-card.dart';
 import 'package:myapp/models/item.dart';
 import 'package:myapp/pages/form-cliente.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:intl/intl.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -47,75 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<String> _callAlertError(BuildContext context, String error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          content: Text(error),
-          elevation: 24,
-          actions: [
-            new FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: new Text("Ok"),
-            ),
-          ],
-        );
-      },
-      barrierDismissible: false,
-    );
-  }
-
-  Future<Void> _asyncInputNewItemDialog(BuildContext context) {
-    String nomeCliente = '';
-
-    return showDialog<Void>(
-      context: context,
-      barrierDismissible:
-          false, // dialog is dismissible with a tap on the barrier
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Crie um novo cliente'),
-          content: new Row(
-            children: <Widget>[
-              new Expanded(
-                child: new Column(
-                  children: <Widget>[
-                    new Expanded(
-                        child: new TextField(
-                      autofocus: true,
-                      decoration: new InputDecoration(
-                          labelText: 'Novo Cliente', hintText: 'Digite nome'),
-                      onChanged: (value) {
-                        nomeCliente = value;
-                      },
-                    )),
-                    BasicDateField(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                setState(() {
-                  widget.todos.add(new Item(name: nomeCliente, done: false));
-                  nomeCliente = '';
-                  saveData();
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   removeItem(int index) {
     setState(() {
       widget.todos.removeAt(index);
@@ -149,25 +76,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
     );
-  }
-}
-
-class BasicDateField extends StatelessWidget {
-  final format = DateFormat("yyyy-MM-dd");
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Text('Data de Entrega'),
-      DateTimeField(
-        format: format,
-        onShowPicker: (context, currentValue) {
-          return showDatePicker(
-              context: context,
-              firstDate: DateTime(1900),
-              initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2100));
-        },
-      ),
-    ]);
   }
 }
