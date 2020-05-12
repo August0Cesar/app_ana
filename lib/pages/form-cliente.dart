@@ -36,9 +36,9 @@ class _FormClientePageState extends State<FormCliente> {
             height: 150,
             child: Column(
               children: <Widget>[
-                ImputForm("Nome Item..."),
+                // ImputForm("Nome Item..."),
                 new Padding(padding: EdgeInsets.only(top: 10.0)),
-                ImputForm("Valor Item..."),
+                // ImputForm("Valor Item..."),
               ],
             ),
           ),
@@ -62,6 +62,10 @@ class _FormClientePageState extends State<FormCliente> {
     );
   }
 
+  TextEditingController _controllerName;
+  TextEditingController _controllerValor;
+  TextEditingController _controllerEntrada;
+
   @override
   void initState() {
     super.initState();
@@ -78,7 +82,10 @@ class _FormClientePageState extends State<FormCliente> {
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  ImputForm("Digite nome do Cliente ..."),
+                  ImputForm(
+                    textFormDefault: "Digite nome do Cliente ...",
+                    controller: _controllerName,
+                  ),
                   new Padding(padding: EdgeInsets.only(top: 10.0)),
                   DateField(),
                   new Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -86,12 +93,17 @@ class _FormClientePageState extends State<FormCliente> {
                     children: <Widget>[
                       Expanded(
                         flex: 1,
-                        child: ImputForm("Valor..."),
+                        child: ImputForm(
+                            textFormDefault: "Valor...",
+                            controller: _controllerValor),
                       ),
                       new Padding(padding: EdgeInsets.only(left: 5.0)),
                       Expanded(
                         flex: 1,
-                        child: ImputForm("Entrada..."),
+                        child: ImputForm(
+                          textFormDefault: "Entrada...",
+                          controller: _controllerEntrada,
+                        ),
                       ),
                     ],
                   ),
@@ -112,7 +124,6 @@ class _FormClientePageState extends State<FormCliente> {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      // FloatingActionButton(onPressed: (){},child: Icon(Icons.add),)
                       RaisedButton(
                         textColor: Colors.white,
                         padding: EdgeInsets.all(0),
@@ -158,7 +169,10 @@ class _FormClientePageState extends State<FormCliente> {
                         borderRadius: new BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.red)),
                     onPressed: () {
-                      Navigator.pop(context);
+                      //Navigator.pop(context);
+                      print("Nome " + _controllerEntrada.text);
+                      print("Valor " + _controllerEntrada.text);
+                      print("Entrada " + _controllerEntrada.text);
                     },
                     color: Colors.red,
                     textColor: Colors.white,
